@@ -7,7 +7,6 @@ import { RubbishService } from './RubbishService';
     CommonModule
   ],
   exports: [
-    //RubbishService
   ],
   declarations: []
 })

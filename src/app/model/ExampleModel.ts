@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
+import { RubbishService } from '../rubbish/RubbishService';
+import { Gizmo } from './Gizmo';
 
-export interface Gizmo {
-  name: string,
-  sprockets: number
-};
-
+/** 
+ * Define the structure of the model
+ * */
 export interface ExampleModel {
 
   readonly user : {
@@ -13,10 +13,22 @@ export interface ExampleModel {
   },
 
   readonly gizmos : {
-    readonly loading: boolean,
+    loading: boolean,
     readonly items: Gizmo[];
   } 
 };
+
+
+/**
+ * Create an injectable service with the initial state
+ */
+@Injectable()
+export class ExampleModelService extends RubbishService<ExampleModel> {
+
+  constructor() {
+    super(initialState);
+  }
+}
 
 export const initialState: ExampleModel = {
   user: {

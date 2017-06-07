@@ -3,17 +3,21 @@ import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 
-import { ExampleModelService } from './model/ExampleModelService';
+import { ExampleModelService } from './model/ExampleModel';
+import { GizmoLoadService } from './services/GizmoLoadService';
+import { HttpModule } from '@angular/http';
 
 @NgModule({
   declarations: [
     AppComponent
   ],
   imports: [
+    HttpModule,
     BrowserModule
   ],
   providers: [
-    ExampleModelService
+    ExampleModelService,
+    GizmoLoadService
   ],
   bootstrap: [AppComponent]
 })

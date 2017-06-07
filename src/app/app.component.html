@@ -2,15 +2,18 @@ User name: <input [value]="model.user.name" (blur)="onChangeProperty(model.user,
 
 <h1> Gizmos! </h1>
 
+<button (click)="undo()">Undo</button><br>
+<button (click)="newGizmo()">Add New Gizmo</button><br>
+<button (click)="loadGizmos()">Load gizmos</button><br>
+
 <ul>
   <li *ngFor="let item of model.gizmos.items">
     Name: <input [value]="item.name" (blur)="onChangeProperty(item, 'name', $event.target.value)">
     Sprockets: <input type="number" [value]="item.sprockets" (blur)="onChangeProperty(item, 'sprockets', $event.target.value)">
+    <button (click)="delete(item)">-</button>
   </li>
 </ul>
 
-<button (click)="newGizmo()">Add New Gizmo</button><br>
-<button (click)="undo()">Undo</button><br>
 
 <div>
   <h2>Data model:</h2>
