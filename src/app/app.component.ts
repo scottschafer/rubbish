@@ -9,16 +9,17 @@ import { ExampleModelService } from './model/ExampleModelService';
 })
 export class AppComponent {
 
-  private model : ExampleModel;
-  private history : Array<ExampleModel>;
+  model : ExampleModel;
+  history : Array<ExampleModel>;
 
   constructor(private modelService : ExampleModelService) {
     this.model = modelService.appState;
     this.history = modelService.history;
   }
 
-  addItem(): void {
+  newGizmo(): void {
     this.modelService.add(this.model.gizmos.items, {name: "Untitled", sprockets: 0});
+    this.model = this.modelService.appState;
   }
 
   onChangeProperty(item: any, propertyName: string, value: any) {

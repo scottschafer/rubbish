@@ -13,12 +13,12 @@ export class RubbishService<T> {
   private objToParent : Map<any, ChildLocator> = new Map<any,ChildLocator>();
 
   constructor(initialState:T) {    
-    this._appState = Object.assign({}, initialState);//.copy(initialState);
+    this._appState = Object.assign({}, { state: initialState } );//.copy(initialState);
     this.setParents(this._appState);
   }
 
   get appState(): T {
-    return this._appState;
+    return this._appState.state;
   }
 
   get history(): Array<T> {
@@ -33,10 +33,7 @@ export class RubbishService<T> {
 
   // append an item to an array
   add(toArray:any[], item:any): void {
-    let locator: ChildLocator = this.objToParent.get(toArray);
-    if (! locator ) {
-      throw "crap";
-    }
+    let locator: ChildLocator = this.getChildLocator(toArray);
 
     this.pushHistory();
 
@@ -45,12 +42,9 @@ export class RubbishService<T> {
     this.setParents(locator.parent);
   }
 
-    // set a single property
-  set(obj: any, property: string, value:any) : void {
-    let locator: ChildLocator = this.objToParent.get(obj);
-    if (! locator ) {
-      throw "crap";
-    }
+  // set a single property
+  set(target: any, property: string, value:any) : void {
+    let locator: ChildLocator = this.getChildLocator(target);
 
     let parent : any = locator.parent[locator.key];
     var newObj = Object.assign({}, locator.parent[locator.key]);
@@ -58,10 +52,35 @@ export class RubbishService<T> {
 
     this.pushHistory();
 
-    locator.parent[locator.key] = newObj;
+/*
+    if (locator.parent == this._appState) {
+      this._appState[property] = value;
+    }
+    else */{
+      locator.parent[locator.key] = newObj;
+      this._appState = newObj;
+    }
     this.setParents(locator.parent);
   }
 
+
+  private getChildLocator(target:any) : ChildLocator {
+    if (target == this._appState) {
+      var wrapper = {
+        state: this._appState
+      };
+      return new ChildLocator(wrapper, 'state');
+    }
+    else {
+      var locator: ChildLocator = this.objToParent.get(target);
+      if (! locator ) {
+        throw "crap"; // TODO
+      }
+      return locator;
+    }
+  }
+
+  // internal history management
   private addToSnapshot(src:any, dest:any) {
     for (var key in src) {
       if (typeof src[key] === 'object') {

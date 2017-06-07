@@ -1,22 +1,28 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
+export interface Gizmo {
+  name: string,
+  sprockets: number
+};
+
 export interface ExampleModel {
 
-  readonly userName: string;
+  readonly user : {
+    name: string;
+  },
 
   readonly gizmos : {
     readonly loading: boolean,
-    readonly items: [ {
-        name: string,
-        sprockets: number
-      }
-    ]
+    readonly items: Gizmo[];
   } 
 };
 
 export const initialState: ExampleModel = {
-  userName: "Initial value",
+  user: {
+    name: "Your name here" 
+  },
+
   gizmos: {
     loading: false,
     items: [ {

@@ -1,3 +1,5 @@
+User name: <input [value]="model.user.name" (blur)="onChangeProperty(model.user, 'name', $event.target.value)">
+
 <h1> Gizmos! </h1>
 
 <ul>
@@ -7,7 +9,7 @@
   </li>
 </ul>
 
-<button (click)="addItem()">Add Item</button><br>
+<button (click)="newGizmo()">Add New Gizmo</button><br>
 <button (click)="undo()">Undo</button><br>
 
 <div>
