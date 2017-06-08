@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 
-import { ExampleModelService } from './model/ExampleModel';
+import { GizmoStoreService } from './model/GizmoStore';
 import { GizmoLoadService } from './services/GizmoLoadService';
 import { HttpModule } from '@angular/http';
 
@@ -16,7 +16,7 @@ import { HttpModule } from '@angular/http';
     BrowserModule
   ],
   providers: [
-    ExampleModelService,
+    GizmoStoreService,
     GizmoLoadService
   ],
   bootstrap: [AppComponent]

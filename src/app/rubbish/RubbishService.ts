@@ -1,13 +1,7 @@
 import { Injectable, EventEmitter } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import * as iassign from "immutable-assign";
-
 iassign.setOption({disableExtraStatementCheck:true});
-
-class ChildLocator {
-  constructor(public readonly parent: any, public readonly key: string) {
-  }
-};
 
 export class RubbishService<T> {
 
@@ -114,6 +108,7 @@ export class RubbishService<T> {
         var locator:ChildLocator = new ChildLocator(obj, key);
         this.objToParent.set(obj[key], locator);
 
+        /*
         var lookup = this.getChildLocator(obj[key]);
         if (! lookup) {
           throw 'x';
@@ -121,9 +116,15 @@ export class RubbishService<T> {
         if (lookup.parent[lookup.key] !== obj[key]) {
           throw 'y';
         }
+        */
 
         this.setParents(obj[key]);
       }
     }
+  }
+};
+
+class ChildLocator {
+  constructor(public readonly parent: any, public readonly key: string) {
   }
 };

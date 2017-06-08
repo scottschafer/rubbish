@@ -6,7 +6,7 @@ import { Gizmo } from './Gizmo';
 /** 
  * Define the structure of the model
  * */
-export interface ExampleModel {
+export interface GizmoStore {
 
   readonly user : {
     name: string;
@@ -23,14 +23,14 @@ export interface ExampleModel {
  * Create an injectable service with the initial state
  */
 @Injectable()
-export class ExampleModelService extends RubbishService<ExampleModel> {
+export class GizmoStoreService extends RubbishService<GizmoStore> {
 
   constructor() {
     super(initialState);
   }
 }
 
-export const initialState: ExampleModel = {
+export const initialState: GizmoStore = {
   user: {
     name: "Your name here" 
   },

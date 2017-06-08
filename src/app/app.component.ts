@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { ExampleModel } from './model/ExampleModel';
-import { ExampleModelService } from './model/ExampleModel';
+import { GizmoStore, GizmoStoreService } from './model/GizmoStore';
 import { GizmoLoadService } from './services/GizmoLoadService';
+import { LoadGizmoAction, NewGizmoAction, DeleteGizmoAction, ModifyPropertyAction } from './actions/gizmo.actions';
 
 @Component({
   selector: 'app-root',
@@ -10,10 +10,10 @@ import { GizmoLoadService } from './services/GizmoLoadService';
 })
 export class AppComponent {
 
-  model : ExampleModel;
-  history : Array<ExampleModel>;
+  model : GizmoStore;
+  history : Array<GizmoStore>;
 
-  constructor(private modelService: ExampleModelService, private gizmoLoadService: GizmoLoadService) {
+  constructor(private modelService: GizmoStoreService, private gizmoLoadService: GizmoLoadService) {
     this.model = modelService.model;
     this.history = modelService.history;
 
@@ -21,31 +21,19 @@ export class AppComponent {
   }
 
   loadGizmos(): void {
-    this.gizmoLoadService.load();
+    new LoadGizmoAction(this.gizmoLoadService);
   }
 
   newGizmo(): void {
-    this.modelService.modify(this.model.gizmos.items,
-      function(items) {
-        items.push({name: "Untitled", sprockets: 0});
-        return items;
-      }
-    );
+    new NewGizmoAction(this.modelService);
   }
 
   delete(item) : void {
-    this.modelService.modify(this.model.gizmos.items,
-      function(items) {
-        let i = items.indexOf(item);
-        if (i != -1) {
-          items.splice(i, 1);
-        }
-        return items;
-      }
-    );
+    new DeleteGizmoAction(this.modelService, item);
   }
 
   onChangeProperty(item: any, propertyName: string, value: any) {
+    new ModifyPropertyAction(this.modelService, item, propertyName, value);
     this.modelService.modify(item,
       function(item) {
         item[propertyName] = value;
